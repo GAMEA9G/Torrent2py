@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Torrent Search</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #1e1e1e; /* Dark background color */
+            color: #ffffff; /* Light text color */
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center; /* Center horizontally */
+
+            height: 800vh; /* Full viewport height */
+        }
+        .container {
+            text-align: center; /* Center content */
+            max-width: 800px; /* Limit width */
+            width: 100%;
+        }
+        .input1 {
+            text-align: center; /* Center content */
+            max-width: 400px; /* Limit width */
+            width: 100%;
+        }
+        h1 {
+            color: #ff9800; /* Orange title color */
+        }
+        form {
+            margin-bottom: 20px;
+        }
+        input[type="text"], input[type="submit"] {
+            font-size: 16px;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: #333; /* Dark input background color */
+            color: #fff; /* Light text color */
+
+            width: 100%;
+            box-sizing: border-box; /* Include padding in width */
+        }
+        input[type="submit"] {
+            background-color: #ff9800; /* Orange submit button color */
+            color: #fff; /* Light text color */
+            cursor: pointer;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+            text-align: left; /* Align list items to the left */
+        }
+        li {
+            margin-bottom: 10px;
+        }
+        a {
+            color: #2196f3; /* Blue link color */
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Torrent Search</h1>
+        <form action="/" method="POST">
+            <label for="movie_name">Enter movie name:</label><br>
+            <input type="text" id="movie_name" name="movie_name" class="input1"><br><br>
+            <input type="submit" value="Search" class="input1">
+        </form>
+        {% if results %}
+        <h2>Search Results:</h2>
+        <ul>
+            {% for result in results %}
+            <li><a href="{{ url_for('download_torrent', magnet_link=result['MagnetLink']) }}">{{ result['Title'] }}</a></li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+
+    </div>
+
+</body>
+</html>
