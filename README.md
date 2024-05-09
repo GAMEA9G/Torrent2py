@@ -10,6 +10,6 @@ pip install -r requirements.txt
 ## install qbittorrent
 install qbittorent through this link https://www.qbittorrent.org/download 
 if you already have that you can skip this step
-## Enable UI
+## Enable Web UI
 Open qbittorrent > Settings > Web UI  Enable Web User Interface Set password to adminadmin
 Usename must be admin
