@@ -2,7 +2,8 @@ import json
 from flask import Flask, render_template, request, redirect, url_for
 from torrents2py import search_torrents
 from qbittorrent import Client
-
+import subprocess
+import sys
 app = Flask(__name__)
 
 # Load the JSON file containing corrections
@@ -17,7 +18,7 @@ def correct_spelling(word):
 
 def get_quality(filename):
     # Define quality based on certain keywords in the filename
-    if 'WEB' in filename:
+    if 'WEBDB' in filename:
         return 3  # Highest quality
     elif '1080p' in filename:
         return 2  # High quality
@@ -25,6 +26,18 @@ def get_quality(filename):
         return 1  # Medium quality
     else:
         return 0  # Default quality
+def webtorrent_stream(magnet_link: str, download: bool):
+    cmd = []
+    cmd.append("webtorrent")
+    cmd.append(magnet_link)
+    if not download:
+        cmd.append('--vlc')
+
+    if sys.platform.startswith('linux'):
+        subprocess.call(cmd)
+    elif sys.platform.startswith('win32'):
+        subprocess.call(cmd, shell=True)
+
 
 def sort_results(results):
     # Sort results based on quality and other criteria
@@ -44,9 +57,8 @@ def index():
 def download_torrent(magnet_link):
     # You might want to sanitize the magnet link here
     # For simplicity, we assume it's safe
-    qb = Client('http://127.0.0.1:8080/')
-    qb.login('admin', 'adminadmin')
-    qb.download_from_link(magnet_link)
+
+    webtorrent_stream(magnet_link,False)
     return "Torrent added to download queue."
 
 if __name__ == '__main__':
