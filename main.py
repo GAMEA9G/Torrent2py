@@ -47,6 +47,7 @@ while True:
             qb = Client('http://127.0.0.1:8080/')
             qb.login('admin', 'adminadmin')
             qb.download_from_link(results[selected_index].get('MagnetLink'))
+
             print("Torrent added to download queue.")
             break  # Exit the loop after successfully adding the torrent
         else:
